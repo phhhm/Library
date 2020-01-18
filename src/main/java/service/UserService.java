@@ -45,8 +45,7 @@ public class UserService {
         try {
             u = LibraryRepository.getInstance().userDao.searchByUsername(username);
             if(username.equals(u.getUsername()) && Encryptor.getMd5(password).equals(u.getPassword())) {
-                if(u.isStatus())
-                    return u;
+                return u;
             }
         } catch (UserNotFoundException e) {
             System.out.println(e.getMessage());

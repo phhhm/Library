@@ -1,6 +1,7 @@
 package View;
 
-import controller.BorrowController;
+import controller.LibraryController;
+import model.Book;
 import utility.Utilities;
 
 import java.sql.Timestamp;
@@ -11,30 +12,34 @@ import java.util.Scanner;
 
 public class BorrowView {
 
-    public static BorrowController borrowController = new BorrowController();
+    Scanner scanner = new Scanner(System.in);
 
-    public void borrowView() {
+    public void borrow() {
 
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         String username;
-        if(Login.currentUser != null)
-             username = Login.currentUser.getUsername();
+
+        System.out.println("Borrow a book : ");
+
+        if(Login.currentUser != null) {
+            username = Login.currentUser.getUsername();
+        }
         else {
-            System.out.println("enter your username");
-            username = Utilities.getInstance().getStringFromUser();
+            System.out.println("enter your username : ");
+            username = scanner.nextLine();
         }
 
-        System.out.println("enter title of book");
-        String title = Utilities.getInstance().getStringFromUser();
+
+        Book book = Main.chooseBook();
 
         System.out.println("enter the date of return like this dd/mm/yyy");
-        String endDateString = Utilities.getInstance().getStringFromUser();
+        String endDateString = scanner.nextLine();
 
         try {
             Date date = formatter.parse(endDateString);
             Timestamp end = new Timestamp(date.getTime());
-            if(!borrowController.borrow(username, title, end))
+            if(!LibraryController.getInstance().borrowController.borrow(username, book, end))
                 System.out.println("this book is unavailable");
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,16 +49,21 @@ public class BorrowView {
     public void refund(){
 
         String username;
-        if(Login.currentUser != null)
+
+        System.out.println("Return a book :");
+
+        if(Login.currentUser != null) {
             username = Login.currentUser.getUsername();
+        }
         else {
             System.out.println("enter your username");
-            username = Utilities.getInstance().getStringFromUser();
+            username = scanner.nextLine();
         }
 
-        System.out.println("enter book title : ");
-        String bookTitle = Utilities.getInstance().getStringFromUser();
 
-        borrowController.refund(username, bookTitle);
+        System.out.println("enter book title : ");
+        String bookTitle = scanner.nextLine();
+
+        LibraryController.getInstance().borrowController.refund(username, bookTitle);
     }
 }

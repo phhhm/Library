@@ -5,7 +5,11 @@ import java.util.Scanner;
 public class Utilities {
 
     private static Utilities utilities ;
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
+
+    Utilities(){
+        scanner = new Scanner(System.in);
+    }
 
     public static Utilities getInstance(){
         if(utilities == null)
@@ -19,5 +23,9 @@ public class Utilities {
 
     public String getStringFromUser(){
         return scanner.nextLine();
+    }
+
+    public Long getLongFromUser(){
+        return scanner.nextLong();
     }
 }

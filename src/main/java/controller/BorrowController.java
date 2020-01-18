@@ -1,5 +1,6 @@
 package controller;
 
+import model.Book;
 import model.Borrow;
 import service.BorrowService;
 
@@ -10,8 +11,8 @@ public class BorrowController {
 
     BorrowService borrowService = new BorrowService();
 
-    public boolean borrow(String username, String bookTitle, Timestamp end) {
-        return borrowService.borrow(username, bookTitle, end);
+    public boolean borrow(String username, Book book, Timestamp end) {
+        return borrowService.borrow(username, book, end);
     }
 
     public List<Borrow> findAll(){

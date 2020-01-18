@@ -12,9 +12,8 @@ import java.util.List;
 
 public class BorrowService {
 
-    public boolean borrow(String username, String bookTitle, Timestamp end) {
+    public boolean borrow(String username, Book book, Timestamp end) {
         try {
-            Book book = LibraryRepository.getInstance().bookDao.searchByTitle(bookTitle);
             User user = LibraryRepository.getInstance().userDao.searchByUsername(username);
             if(book == null || !book.isStatus()) {
                 System.out.println("book is unavailable");
